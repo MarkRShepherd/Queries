@@ -757,9 +757,9 @@ SELECT DISTINCT ON ("Policy"."id")
 , COALESCE(excess_vehicles."count", 0) + COALESCE(primary_vehicles."count", 0) as "Fleet Size"
 , benchmark."Benchmark" as "Benchmark"
 , qp."finalPremium" * (1 - qp."totalExpenseLoadPercentage") as "Selected"
-, COALESCE(primary_pricing_data."generalLiabilityProfitLoadPercentage", 0) as "GL Profit Load (%)" -- added
-, COALESCE(primary_pricing_data."autoLiabilityProfitLoadPercentage", 0) as "AL Profit Load (%)" -- added
-, COALESCE(primary_pricing_data."autoPhysDamProfitLoadPercentage",0) as "APD Profit Load (%)" -- added
+, primary_pricing_data."generalLiabilityProfitLoadPercentage" as "GL Profit Load (%)" -- added
+, primary_pricing_data."autoLiabilityProfitLoadPercentage" as "AL Profit Load (%)" -- added
+, primary_pricing_data."autoPhysDamProfitLoadPercentage" as "APD Profit Load (%)" -- added
 , COALESCE(qp."profitLoadFeePercentage", 0) + COALESCE(primary_pricing_data."totalProfitLoadPercentage", 0) as "Profit Load (%)"
 
 , primary_pricing_data."generalLiabilityPricingAdequacy" as "GL Pricing Adequacy"
@@ -791,14 +791,14 @@ SELECT DISTINCT ON ("Policy"."id")
     END AS "Umbrella or Excess"
 -- , CAST(qp."premiumClass" as text) as "Premium Class"
 -- ,  qp."portfolioClass" AS "Portfolio Class"
-, COALESCE(primary_pricing_data."generalLiabilityBrokerageCommissionPercentage") as "GL Commission (%)" -- added
-, COALESCE(primary_pricing_data."autoLiabilityBrokerageCommissionPercentage") as "AL Commission (%)" -- added
-, COALESCE(primary_pricing_data."autoPhysDamBrokerageCommissionPercentage") as "APD Commission (%)" -- added
+, primary_pricing_data."generalLiabilityBrokerageCommissionPercentage" as "GL Commission (%)" -- added
+, primary_pricing_data."autoLiabilityBrokerageCommissionPercentage" as "AL Commission (%)" -- added
+, primary_pricing_data."autoPhysDamBrokerageCommissionPercentage" as "APD Commission (%)" -- added
 , COALESCE((qp."brokerCommission" / qp."finalPremium"),0) + COALESCE(primary_pricing_data."totalBrokerageCommissionPercentage",0) as "Commission (%)"
 
-, COALESCE(primary_pricing_data."generalLiabilityShepherdFeePercentage") as "GL Fee (%)" -- added
-, COALESCE(primary_pricing_data."autoLiabilityShepherdFeePercentage") as "AL Fee (%)" -- added
-, COALESCE(primary_pricing_data."autoPhysDamShepherdFeePercentage") as "APD Fee (%)" -- added
+, primary_pricing_data."generalLiabilityShepherdFeePercentage" as "GL Fee (%)" -- added
+, primary_pricing_data."autoLiabilityShepherdFeePercentage" as "AL Fee (%)" -- added
+, primary_pricing_data."autoPhysDamShepherdFeePercentage" as "APD Fee (%)" -- added
 , COALESCE(qp."shepherdMgaFeePercentage", 0) + COALESCE(primary_pricing_data."totalShepherdFeePercentage", 0) as "Fee (%)" 
 
 , COALESCE(primary_pricing_data."totalTpaClaimsHandlingCharge",0) as "TPA Claims Handling Charge"
@@ -815,9 +815,9 @@ SELECT DISTINCT ON ("Policy"."id")
 , COALESCE(xsqp."experienceRatingFactorGeneralLiability",0) + COALESCE(general_liability_manual_premium."experienceMod",0) as "GL Experience Rating Factor"
 , COALESCE(xsqp."experienceRatingFactorAuto",0) + COALESCE(auto_manual_premium."liabilityExperienceMod",0) as "AL Experience Rating Factor"
 
-, COALESCE(primary_pricing_data."generalLiabilityTotalExpenseLoad",0) as "GL Expense Load (%)" -- added
-, COALESCE(primary_pricing_data."autoLiabilityTotalExpenseLoad",0) as "AL Expense Load (%)" -- added
-, COALESCE(primary_pricing_data."autoPhysDamTotalExpenseLoad",0) as "APD Expense Load (%)" -- added
+, primary_pricing_data."generalLiabilityTotalExpenseLoad" as "GL Expense Load (%)" -- added
+, primary_pricing_data."autoLiabilityTotalExpenseLoad" as "AL Expense Load (%)" -- added
+, primary_pricing_data."autoPhysDamTotalExpenseLoad" as "APD Expense Load (%)" -- added
 , COALESCE(qp."totalExpenseLoadPercentage",0) + COALESCE(primary_pricing_data."totalExpenseLoadPercentage",0) as "Total Expense Load (%)"
 
 , COALESCE(xsqp."finalTotalManualPremiumGeneralLiability",0) + COALESCE(pxsqp."finalTotalManualPremiumGeneralLiability",0) AS "GL Manual Ratings"
