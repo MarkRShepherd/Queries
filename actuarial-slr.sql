@@ -617,6 +617,8 @@ SELECT
     , NULL::numeric AS "GL Selected Loss Cost"
     , NULL::numeric AS "AL Selected Loss Cost"
     , NULL::numeric AS "APD Selected Loss Cost"
+    , NULL::numeric AS "GL LCM"
+    , NULL:: numeric AS "AL LCM"
     , NULL::numeric AS "Subcontracted Cost"
     , pce."triaFeePercentage" AS "TRIA Fee Percentage"
     , pce."employersLiabilityFeePercentage" as "Employer's Liability Fee Percentage"
@@ -828,6 +830,9 @@ SELECT DISTINCT ON ("Policy"."id")
 , COALESCE(xsqp."excessLossCostAdjustmentAuto", 0) + COALESCE(primary_pricing_data."autoLiabilitySelectedLossCost", 0) as "AL Selected Loss Cost"
 , COALESCE(primary_pricing_data."autoPhysDamSelectedLossCost",0) as "APD Selected Loss Cost"
 
+, generalliability_losscost_buildup."lcm" as "GL LCM"
+, autoliability_losscost_buildup."lossCostMultiplier" as "AL LCM"
+
 , subcost."Subcontracted Cost"
 , qp."triaFeePercentage" as "TRIA Fee Percentage"
 , qp."employersLiabilityFeePercentage" as "Employer's Liability Fee Percentage"
@@ -938,6 +943,8 @@ LEFT OUTER JOIN sum_vehicles as sv ON sv."quoteDetailId" = qd.id
 LEFT OUTER JOIN subcost ON subcost."quoteDetailId" = qd.id
 LEFT OUTER JOIN "ExcessRenewalPricing" as xsrp ON xsrp."quotePricingId" = qp."id"
 LEFT OUTER JOIN multi_submissions as ms ON ms."Policy ID" = "Policy"."id"
+LEFT OUTER JOIN "GeneralLiabilityIndividualRiskRatedInitialLossCostBuildup" generalliability_losscost_buildup ON generalliability_losscost_buildup."id" = primary_intermediate_pricing."generalLiabilityIndividualRiskRatedInitialLossCostBuildupId"
+LEFT OUTER JOIN "AutoManualIndividualRiskRatedInitialLossCostBuildup" autoliability_losscost_buildup ON autoliability_losscost_buildup."id" = primary_intermediate_pricing."autoManualIndividualRiskRatedInitialLossCostBuildupId"
 left join active_tech_usage_single_row as atu on atu.id = "Policyholder".id
 WHERE 
     "Quote"."status" <> 'DISCARDED' 
