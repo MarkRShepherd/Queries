@@ -310,6 +310,8 @@ LEFT OUTER JOIN "QuotePricing" qp ON qp."quoteDetailId" = "QuoteDetail".id
 LEFT OUTER JOIN "QuoteSelection" as qs on qs."quoteDetailId" = "QuoteDetail".id 
 LEFT OUTER JOIN "ExcessQuotePricing" as xqp ON xqp."quotePricingId"= qp.id
 LEFT OUTER JOIN "ProjectExcessQuotePricing" as pxqp ON pxqp."quotePricingId"= qp.id
+LEFT OUTER JOIN "ExcessAdmittedPracticeFinalPricing" xafp_prac ON xafp_prac."quotePricingId"= qp.id
+LEFT OUTER JOIN "ExcessAdmittedProjectFinalPricing" as xafp_proj ON xafp_proj."quotePricingId"= qp.id
 LEFT OUTER JOIN "PrimaryProjectFinalPricing" as primary_project_final_pricing ON primary_project_final_pricing."quoteDetailId" = "QuoteDetail".id
 ),
 
@@ -920,6 +922,8 @@ LEFT OUTER JOIN "PrimaryGeneralLiabilityExposure" as primary_practice_general_li
 LEFT OUTER JOIN "ExcessGeneralLiabilityRiskTier" as xsgltier ON xsgltier."exposureId"= xsglexp.id
 LEFT OUTER JOIN "ExcessQuotePricing" as xsqp ON xsqp."quotePricingId" = qp.id
 LEFT OUTER JOIN "ProjectExcessQuotePricing" as pxsqp ON pxsqp."quotePricingId" = qp.id
+LEFT OUTER JOIN "ExcessAdmittedPracticeFinalPricing" as xsafp_prac ON xsafp_prac."quotePricingId" = qp.id
+LEFT OUTER JOIN "ExcessAdmittedProjectFinalPricing" as xsafp_proj ON xsafp_proj."quotePricingId" = qp.id
 LEFT OUTER JOIN "ProjectExcessGeneralLiabilityExposure" as pxsglexp ON pxsglexp."quoteDetailId" = qd.id
 LEFT OUTER JOIN "ProjectPrimaryGeneralLiabilityExposure" as primary_project_general_liability_exposure on primary_project_general_liability_exposure."quoteDetailId" = qd.id
 LEFT OUTER JOIN "ProjectExcessGeneralLiabilityRiskTier" as pxsgltier ON pxsgltier."exposureId"= pxsglexp.id
